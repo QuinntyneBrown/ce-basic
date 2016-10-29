@@ -13,6 +13,8 @@
 # Frontend Build results
 src/**/*.js
 src/**/*.js.map
+src/**/*.css
+src/**/*.css.map
 typings
 dist
 
