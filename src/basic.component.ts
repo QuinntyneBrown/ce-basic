@@ -17,8 +17,22 @@ export class BasicComponent extends HTMLElement {
         super();
 
     }
+
+    static get observedAttributes () {
+        return ['color'];
+    }
     
+    private _color:string;
+
+    public set color(value) { 
+        this.style.setProperty('--color', value);
+        this._color = value; 
+    }
+
+    public get color(){ return this._color; }
+
     connectedCallback() {
+
         if(document.head["createShadowRoot"]) {
             let shadowRoot = (this as any).attachShadow({mode: 'open'});
             shadowRoot.innerHTML = customInnerHTML;            
@@ -31,8 +45,12 @@ export class BasicComponent extends HTMLElement {
 
     }
 
-    attributeChangedCallback(attrName, oldVal, newVal) {
+    attributeChangedCallback (name, oldValue, newValue) {
+        if (name !== 'color') {
+        return;
+        }
 
+        this.color = newValue;
     }
 }
 
