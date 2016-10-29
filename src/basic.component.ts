@@ -1,6 +1,11 @@
 
 let customElements:any;
 const template = require("./basic.component.html");
+const styles = require("./basic.component.css");
+let customInnerHTML = "<style> " + styles + "</style>" + template;
+
+if(!document.head.createShadowRoot)
+    customInnerHTML = customInnerHTML.replace(":host", "ce-basic");
 
 export class BasicComponent extends HTMLElement {
     constructor() {
@@ -9,14 +14,11 @@ export class BasicComponent extends HTMLElement {
     }
     
     connectedCallback() {
-
-        /* shadow dom only support in Chrome Canary */
-        
         try {
             let shadowRoot = (this as any).attachShadow({mode: 'open'});
-            shadowRoot.innerHTML = template;
+            shadowRoot.innerHTML = customInnerHTML;
         } catch (e){
-            this.innerHTML = template;
+            this.innerHTML = customInnerHTML;
         }   
     }
 
