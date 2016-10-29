@@ -1,5 +1,7 @@
 
 let customElements:any;
+const prefix: string = "ce";
+const selector: string = "basic";
 let customInnerHTML = [
     "<style>", 
     require("./basic.component.scss"), 
@@ -8,7 +10,7 @@ let customInnerHTML = [
     ].join(" ");
 
 if(!document.head["createShadowRoot"])
-    customInnerHTML = customInnerHTML.replace(":host", "ce-basic");
+    customInnerHTML = customInnerHTML.replace(":host", `${prefix}-${selector}`);
 
 export class BasicComponent extends HTMLElement {
     constructor() {
@@ -35,5 +37,5 @@ export class BasicComponent extends HTMLElement {
 }
 
 document.addEventListener("DOMContentLoaded",function() {
-    (window as any).customElements.define("ce-basic",BasicComponent);
+    (window as any).customElements.define(`${prefix}-${selector}`,BasicComponent);
 });
