@@ -1,6 +1,11 @@
 
 let customElements:any;
-let customInnerHTML = "<style> " + require("./basic.component.scss") + "</style>" + require("./basic.component.html");
+let customInnerHTML = [
+    "<style>", 
+    require("./basic.component.scss"), 
+    "</style>", 
+    require("./basic.component.html")
+    ].join(" ");
 
 if(!document.head["createShadowRoot"])
     customInnerHTML = customInnerHTML.replace(":host", "ce-basic");
@@ -12,12 +17,12 @@ export class BasicComponent extends HTMLElement {
     }
     
     connectedCallback() {
-        try {
+        if(document.head["createShadowRoot"]) {
             let shadowRoot = (this as any).attachShadow({mode: 'open'});
-            shadowRoot.innerHTML = customInnerHTML;
-        } catch (e){
+            shadowRoot.innerHTML = customInnerHTML;            
+        } else {
             this.innerHTML = customInnerHTML;
-        }   
+        }  
     }
 
     disconnectedCallback() {
