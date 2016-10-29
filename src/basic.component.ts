@@ -1,10 +1,8 @@
 
 let customElements:any;
-const template = require("./basic.component.html");
-const styles = require("./basic.component.css");
-let customInnerHTML = "<style> " + styles + "</style>" + template;
+let customInnerHTML = "<style> " + require("./basic.component.scss") + "</style>" + require("./basic.component.html");
 
-if(!document.head.createShadowRoot)
+if(!document.head["createShadowRoot"])
     customInnerHTML = customInnerHTML.replace(":host", "ce-basic");
 
 export class BasicComponent extends HTMLElement {
